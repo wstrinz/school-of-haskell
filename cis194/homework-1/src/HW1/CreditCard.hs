@@ -9,16 +9,23 @@ module HW1.CreditCard
 type CCNumber = Integer
 
 toDigits :: CCNumber -> [Integer]
-toDigits = undefined
+toDigits cc
+  | cc > 0 = map (\x -> read [x] :: Integer) $ show cc
+  | otherwise = []
 
 toDigitsRev :: CCNumber -> [Integer]
-toDigitsRev = undefined
+toDigitsRev = reverse . toDigits
 
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther = undefined
+doubleEveryOther = reverse . doubleEveryOtherHelper . reverse
+
+doubleEveryOtherHelper :: [Integer] -> [Integer]
+doubleEveryOtherHelper (x:y:xs) = x : 2 * y : doubleEveryOtherHelper xs
+doubleEveryOtherHelper a = a
+
 
 sumDigits :: [Integer] -> Integer
-sumDigits = undefined
+sumDigits = sum . map (sum . toDigits)
 
 validate :: CCNumber -> Bool
-validate = undefined
+validate = (0 ==) . (`mod` 10) . sumDigits . doubleEveryOther . toDigits
