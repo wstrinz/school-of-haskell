@@ -78,32 +78,30 @@
 
 \* HW1 functions *\
 
-(defmacro pipe
-    [~> X F] -> [F X]
-    [~> X F | Fs] -> [~> [F X] | Fs])
-
 (define to_digits
   {ccnumber --> (list ccnumber)}
-  X -> [] where (~> X str hdstr (== "-"))
-  X -> (~> X str explode (map string->number)))
+  A -> [] where (= "-" (hdstr (str A)))
+  A -> (map string->number (explode (str A))))
 
 (define to_digits_rev
   {ccnumber --> (list ccnumber)}
-  X -> (~> X to_digits reverse))
+  A -> (reverse (to_digits A)))
 
 (define double_every_other'
   {(list ccnumber) --> (list ccnumber)}
   [X Y | XS] -> [X (* Y 2) | (double_every_other' XS)]
+  [X Y] -> [X (* Y 2)]
   X -> X)
 
 (define double_every_other
   {(list ccnumber) --> (list ccnumber)}
-  X -> (~> X reverse double_every_other' reverse))
+  X -> (reverse (double_every_other' (reverse X))))
 
 (define sum_digits
   {(list ccnumber) --> ccnumber}
-  X -> (~> X (map to_digits) flatten sum))
+  X -> (sum (flatten (map to_digits X))))
 
 (define validate
   {ccnumber --> boolean}
-  X -> (~> X to_digits double_every_other sum_digits (/. N (mod N 10)) (== 0) ))
+  X -> (== 0 (mod (sum_digits (double_every_other (to_digits X)))
+          10)))
