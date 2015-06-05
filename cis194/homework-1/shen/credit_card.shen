@@ -106,4 +106,6 @@
 
 (define validate
   {ccnumber --> boolean}
-  X -> (~> X to_digits double_every_other sum_digits (/. N (mod N 10)) (== 0) ))
+  X -> (~> X to_digits double_every_other sum_digits
+             (/. N (mod N 10))
+             (== 0) ))
