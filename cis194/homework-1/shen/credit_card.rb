@@ -5,13 +5,21 @@ class CreditCard
       @shen
     else
       @shen = ShenRuby::Shen.new
-      load_shen_files
+
+      puts @shen.eval_string <<-SHEN
+(defmacro pipe
+    [~> X F] -> [F X]
+    [~> X F | Fs] -> [~> [F X] | Fs])
+
+      SHEN
+      puts @shen.eval_string("(tc +)")
+      puts load_shen_files
       @shen
     end
   end
 
   def self.load_shen_files
-    @shen.eval_string open('credit_card.shen','r').read
+    @shen.eval_string ('(load "credit_card.shen")')
   end
 
   def initialize
@@ -38,4 +46,3 @@ class CreditCard
     @shen.validate(num)
   end
 end
-
