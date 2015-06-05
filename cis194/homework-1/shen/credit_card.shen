@@ -84,12 +84,12 @@
 
 (define to_digits
   {ccnumber --> (list ccnumber)}
-  A -> [] where (~> A str hdstr (== "-"))
-  A -> (~> A str explode (map string->number)))
+  X -> [] where (~> X str hdstr (== "-"))
+  X -> (~> X str explode (map string->number)))
 
 (define to_digits_rev
   {ccnumber --> (list ccnumber)}
-  A -> (~> A to_digits reverse))
+  X -> (~> X to_digits reverse))
 
 (define double_every_other'
   {(list ccnumber) --> (list ccnumber)}
@@ -104,10 +104,6 @@
   {(list ccnumber) --> ccnumber}
   X -> (~> X (map to_digits) flatten sum))
 
-(define modten
-  {ccnumber --> ccnumber}
-  X -> (mod X 10))
-
 (define validate
   {ccnumber --> boolean}
-  X -> (~> X to_digits double_every_other sum_digits modten (== 0)))
+  X -> (~> X to_digits double_every_other sum_digits (/. N (mod N 10)) (== 0) ))
