@@ -4,10 +4,7 @@
   _____________________________________
   (number? N) : verified >> N : number;)
 
-(datatype ccnumber
-  CC : number;
-  ==========
-  CC : ccnumber;)
+(synonyms ccnumber number)
 
 \* flatten function from chibi-shen core *\
 
