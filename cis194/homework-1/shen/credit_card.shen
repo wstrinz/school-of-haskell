@@ -1,16 +1,8 @@
-(tc +)
-
 (datatype number
   _____________________________________
   (number? N) : verified >> N : number;)
 
 (synonyms ccnumber number)
-
-\* flatten function from chibi-shen core *\
-
-(defun flatten (V13222) (cond ((= () V13222) ()) ((cons? V13222) (append (shen.flatten (hd V13222)) (shen.flatten (tl V13222)))) (true (cons V13222 ()))))
-
-
 
 \* String functions from Willi Riha's Strings library *\
 
@@ -22,7 +14,6 @@
 (define string->number
   {string --> number}
   Str -> (number-test Str (read-from-string Str)))
-
 
 
 
@@ -96,6 +87,11 @@
 (define double_every_other
   {(list ccnumber) --> (list ccnumber)}
   X -> (~> X reverse double_every_other' reverse))
+
+(define flatten
+  {(list (list A)) --> (list A)}
+  [X | XS] -> (append X (flatten XS))
+  [] -> [])
 
 (define sum_digits
   {(list ccnumber) --> ccnumber}
